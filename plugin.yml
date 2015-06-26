@@ -1,0 +1,3 @@
+name: XTK integration demo
+description: Allows inline display of XTK-supported datasets within Girder
+version: 0.1.0
