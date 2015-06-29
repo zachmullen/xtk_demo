@@ -6,6 +6,8 @@ girder.views.xtk_demo_XtkView = girder.View.extend({
 
     render: function () {
         this.renderer = new X.renderer3D();
+        //this.renderer = new X.renderer2D();
+        //this.renderer.orientation = 'x';
         this.renderer.container = this.$el[0];
         this.renderer.init();
 
@@ -16,6 +18,15 @@ girder.views.xtk_demo_XtkView = girder.View.extend({
             this.renderer.camera.position = [0, 400, 0];
             this.renderer.render();
         }
+    },
+
+    destroy: function () {
+        // We must manually destroy the renderer.
+        if (this.renderer) {
+            this.renderer.destroy();
+            this.renderer = null;
+        }
+        girder.View.prototype.destroy.call(this);
     },
 
     _instantiateObject: function () {
@@ -35,13 +46,22 @@ girder.views.xtk_demo_XtkView = girder.View.extend({
             });
 
             this.renderer.onShowtime = function () {
-                volume.volumeRendering = true;
-                //volume.lowerThreshold = 80;
-                //volume.windowLower = 115;
-                //volume.windowHigh = 360;
-                //volume.minColor = [0, 0.06666666666666667, 1];
-                //volume.maxColor = [0.5843137254901961, 1, 0];
-                //volume.opacity = 0.2;
+                volume.minColor = info.minColor || [0, 0, 0];
+                volume.maxColor = info.maxColor || [1, 1, 1];
+
+                if (_.has(info, 'opacity')) {
+                    volume.opacity = info.opacity;
+                }
+                if (_.has(info, 'window')) {
+                    volume.windowLower = info.window[0];
+                    volume.windowHigh = info.window[1];
+                }
+
+                volume.lowerThreshold = info.lowerThreshold || 0;
+
+                if (info.volumeRender) {
+                    volume.volumeRendering = true;
+                }
             };
             return volume;
         } else {
