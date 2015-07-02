@@ -1,6 +1,14 @@
 @import 'nib'
 
 .g-xtk-demo-container
-  height 500px
-  background linear-gradient(top, black 0%, #555 100%)
   margin-bottom 15px
+  position relative
+
+  .g-render-target
+    background-color black
+    height 500px
+
+  .g-gui-container
+    position absolute
+    top 5px
+    right 5px
