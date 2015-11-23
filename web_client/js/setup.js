@@ -32,7 +32,7 @@ girder.ensureXtkLoaded = function () {
     if (girder._xtkLoaded) {
         girder.events.trigger('g:xtkLoaded', X);
     } else {
-        $.getScript('http://get.goXTK.com/xtk_edge.js', function () {
+        $.getScript('//get.goXTK.com/xtk_edge.js', function () {
             girder._xtkLoaded = true;
             girder.events.trigger('g:xtkLoaded', X);
         });
