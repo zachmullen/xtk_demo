@@ -1,4 +1,11 @@
-girder.views.xtk_demo_XtkView = girder.View.extend({
+import _ from 'underscore';
+import events from 'girder/events';
+import dat from 'dat.gui/build/dat.gui';
+import View from 'girder/views/View';
+import template from './templates/xtk_demo_viewer.pug';
+import './stylesheets/xtkItemView.styl';
+
+const XtkView = View.extend({
     initialize: function (settings) {
         this.files = settings.files;
         this.item = settings.item;
@@ -6,7 +13,7 @@ girder.views.xtk_demo_XtkView = girder.View.extend({
     },
 
     render: function () {
-        this.$el.html(girder.templates.xtk_demo_viewer());
+        this.$el.html(template());
         this._initXtkRenderer();
     },
 
@@ -16,7 +23,7 @@ girder.views.xtk_demo_XtkView = girder.View.extend({
             this.renderer.destroy();
             this.renderer = null;
         }
-        girder.View.prototype.destroy.call(this);
+        View.prototype.destroy.call(this);
     },
 
     _initXtkRenderer: function () {
@@ -38,7 +45,7 @@ girder.views.xtk_demo_XtkView = girder.View.extend({
             this.renderer.orientation = 'AXIAL';
             obj = this._doVolume2d(info);
         } else {
-            girder.events.trigger('g:alert', {
+            events.trigger('g:alert', {
                 text: 'Unsupported XTK type: ' + type,
                 type: 'danger',
                 icon: 'cancel'
@@ -186,3 +193,5 @@ girder.views.xtk_demo_XtkView = girder.View.extend({
         }, this));
     }
 });
+
+export default XtkView;

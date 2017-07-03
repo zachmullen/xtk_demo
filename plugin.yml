@@ -1,3 +1,6 @@
 name: XTK integration demo
 description: Allows inline display of XTK-supported datasets within Girder
-version: 0.2.0
+version: 0.3.0
+npm:
+  dependencies:
+    "dat.gui": "0.6.1"
